@@ -8,12 +8,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const scoreDisplay = document.getElementById('score');
     const store = document.getElementById('store');
     const openStoreButton = document.getElementById('open-store');
+    const saveDataButton = document.getElementById('save-data');
+    const loadDataButton = document.getElementById('load-data');
     const buyAutoClickerButton = document.getElementById('buy-auto-clicker');
     const buyMultiplierButton = document.getElementById('buy-multiplier');
     const buySuperClickButton = document.getElementById('buy-super-click');
     const buySpeedUpButton = document.getElementById('buy-speed-up');
     const buyBonusTimeButton = document.getElementById('buy-bonus-time');
     const bonusMessage = document.getElementById('bonus-message');
+
+    // Получаем IP-адрес пользователя
+    const getUserIP = async () => {
+        try {
+            const response = await axios.get('https://api.ipify.org?format=json');
+            return response.data.ip;
+        } catch (error) {
+            console.error('Ошибка получения IP:', error);
+            return null;
+        }
+    };
 
     clickButton.addEventListener('click', () => {
         let pointsToAdd = superClickActive ? 2 * multiplier : 1 * multiplier;
@@ -25,6 +38,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     openStoreButton.addEventListener('click', () => {
         store.classList.toggle('hidden');
+    });
+
+    saveDataButton.addEventListener('click', async () => {
+        const ip = await getUserIP();
+        if (ip) {
+            const data = { score, autoClickerCount, multiplier, ip };
+            localStorage.setItem(ip, JSON.stringify(data));
+            alert('Данные сохранены!');
+        } else {
+            alert('Не удалось получить IP-адрес для сохранения данных.');
+        }
+    });
+
+    loadDataButton.addEventListener('click', async () => {
+        const ip = await getUserIP();
+        if (ip) {
+            const savedData = localStorage.getItem(ip);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                score = data.score;
+                autoClickerCount = data.autoClickerCount;
+                multiplier = data.multiplier;
+                scoreDisplay.textContent = score;
+                alert('Данные загружены!');
+            } else {
+                alert('Нет сохранённых данных для этого IP-адреса.');
+            }
+        } else {
+            alert('Не удалось получить IP-адрес для загрузки данных.');
+        }
     });
 
     buyAutoClickerButton.addEventListener('click', () => {
