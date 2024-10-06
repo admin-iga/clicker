@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Хомяк Кликер</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Хамстер Комбат</title>
 </head>
 <body>
     <div class="container">
-        <h1>Хомяк Кликер</h1>
-        <button id="clicker-button">Кликни меня!</button>
-        <p>Очки: <span id="score">0</span></p>
-        <div class="shop">
-            <button id="upgrade-attack">Улучшить атаку (10 очков)</button>
+        <h1>Хамстер Комбат</h1>
+        <button id="click-button">Кликни на Хомяка!</button>
+        <p>Ваш счёт: <span id="score">0</span></p>
+        <button id="open-store">Открыть магазин</button>
+        <div id="store" class="hidden">
+            <h2>Магазин улучшений</h2>
+            <button id="buy-auto-clicker">Купить авто-кликера (10 очков)</button>
+            <button id="buy-multiplier">Купить множитель (50 очков)</button>
         </div>
+        <div id="bonus-message" class="hidden">Бонус!</div>
     </div>
+    <script src="app.js"></script>
 </body>
 </html>
