@@ -10,22 +10,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const buyMultiplierButton = document.getElementById('buy-multiplier');
     const bonusMessage = document.getElementById('bonus-message');
 
-    let chatId = null; // Переменная для хранения chat_id
-
-    // Функция для получения chat_id (замените на свой метод)
-    function getChatId() {
-        // Здесь вы можете задать свой метод получения chat_id
-        // Например, если вы сохраняете его на сервере при старте игры
-        chatId = 'YOUR_CHAT_ID'; // Получить из состояния приложения или сервера
-    }
-
-    // Вызываем функцию получения chat_id при старте игры
-    getChatId();
-
     clickButton.addEventListener('click', () => {
         score += 1 * multiplier;
         scoreDisplay.textContent = score;
         checkForBonus();
+        checkForMilestones(); // Проверяем достижения
     });
 
     openStoreButton.addEventListener('click', () => {
@@ -65,27 +54,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    // Интеграция с Telegram API (отправка сообщения при достижении очков)
-    function sendTelegramNotification(message) {
-        const apiUrl = `https://api.telegram.org/bot${'7285169360:AAGiOclAJdmiWMSsKvgd7BOFd43c8bdJ2QA'}/sendMessage`;
-        if (chatId) {
-            axios.post(apiUrl, {
-                chat_id: chatId,
-                text: message
-            }).then(response => {
-                console.log('Уведомление отправлено в Telegram');
-            }).catch(error => {
-                console.error('Ошибка при отправке уведомления в Telegram', error);
-            });
-        } else {
-            console.error('chat_id не установлен!');
+    // Проверка достижений и вывод уведомления
+    function checkForMilestones() {
+        if (score === 50) {
+            alert('Поздравляем! Вы достигли 50 очков!');
+        } else if (score === 100) {
+            alert('Отлично! Вы достигли 100 очков!');
+        } else if (score === 200) {
+            alert('Великолепно! Вы достигли 200 очков!');
         }
+        // Добавьте больше достижений здесь, если необходимо
     }
-
-    // Пример отправки уведомления при достижении 100 очков
-    setInterval(() => {
-        if (score >= 100) {
-            sendTelegramNotification(`Поздравляем! Вы достигли ${score} очков в Хамстер Комбат!`);
-        }
-    }, 5000);
 });
