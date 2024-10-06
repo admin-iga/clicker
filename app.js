@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         checkForMilestones(); // Проверяем достижения
     });
 
+    // Убедимся, что обработчик для открытия магазина работает
     openStoreButton.addEventListener('click', () => {
         store.classList.toggle('hidden');
     });
